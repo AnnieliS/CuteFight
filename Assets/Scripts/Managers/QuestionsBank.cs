@@ -27,10 +27,10 @@ public class QuestionsBank : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ChooseQuestionForRounds();
+        // ChooseQuestionForRounds();
     }
 
-    private void ChooseQuestionForRounds()
+    public void ChooseQuestionForRounds()
     {
         foreach (string s in questionsBank)
         {
@@ -50,6 +50,10 @@ public class QuestionsBank : MonoBehaviour
                 questionsDealt++;
             }
         }
+    }
+
+    public string GetCurrentRoundQuestion(int round){
+        return questionInBattle[round-1];
     }
 }
 

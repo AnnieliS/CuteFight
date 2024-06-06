@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class RoundFlow : MonoBehaviour
 {
+    [Header("Battle Screen")]
     [Header("Left Most Character")]
     [SerializeField] Image characterSprite1;
     [SerializeField] Image nameSprite1;
@@ -21,17 +22,17 @@ public class RoundFlow : MonoBehaviour
     {
         // sprites = GameObject.FindGameObjectsWithTag(spriteTag);
         // names = GameObject.FindGameObjectsWithTag(nameTag);
-        StartCoroutine(StartRound());
+        // StartCoroutine(StartRound());
 
     }
 
-    IEnumerator StartRound()
-    {
-        yield return new WaitForSeconds(0.01f);
-        InitiateRound(CuteCharactersBank.Instance().GetRound(1), 1);
-    }
+    // IEnumerator StartRound()
+    // {
+    //     // yield return new WaitForSeconds(0.01f);
+    //     // InitiateRound(CuteCharactersBank.Instance().GetRound(1), 1);
+    // }
 
-    private void InitiateRound(List<BattleCharacter> roundBank, int roundIndex)
+    public void InitiateRound(List<BattleCharacter> roundBank, int roundIndex)
     {
         Debug.Log(roundBank.Count);
         characterSprite1.sprite = roundBank[0].characterSprite;

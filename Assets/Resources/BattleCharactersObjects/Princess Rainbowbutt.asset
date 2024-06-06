@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Princess Rainbowbutt
   m_EditorClassIdentifier: 
   characterName: Princess Rainbowbutt
-  characterSprite: {fileID: 21300000, guid: 2b344efde9d9e504dabd8a237d8afcef, type: 3}
-  nameSprite: {fileID: 21300000, guid: 78e3e34e0ca62514e974f4cc9c7bbc7d, type: 3}
+  characterSprite: {fileID: 21300000, guid: ab43874906b03f74f8a069cf09246663, type: 3}
+  nameSprite: {fileID: 21300000, guid: e68abc1bc1a0ed349a8d1dde90e76449, type: 3}

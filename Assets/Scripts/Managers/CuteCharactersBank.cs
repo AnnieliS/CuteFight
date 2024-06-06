@@ -42,7 +42,7 @@ public class CuteCharactersBank : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InitiateCharactersPerRound();
+        // InitiateCharactersPerRound();
 
     }
 
@@ -59,6 +59,9 @@ public class CuteCharactersBank : MonoBehaviour
             case 3:
                 return round3;
                 break;
+            case 4:
+                return round4;
+                break;
             default:
                 return round1;
                 break;
@@ -66,7 +69,7 @@ public class CuteCharactersBank : MonoBehaviour
         }
     }
 
-    private void InitiateCharactersPerRound()
+    public void InitiateCharactersPerRound()
     {
         // Debug.Log("InitiateCharactersPerRound");
 
@@ -95,7 +98,7 @@ public class CuteCharactersBank : MonoBehaviour
             int totalCharacters = tempBank.Count;
             int i = Random.Range(0, totalCharacters);
             // Debug.Log("i: " + i);
-            BattleCharacter tempChara = battleCharactersBank[i];
+            BattleCharacter tempChara = tempBank[i];
             // Debug.Log("temp chara: " + tempChara);
             if (round.Contains(tempChara) == false)
             {
@@ -106,6 +109,13 @@ public class CuteCharactersBank : MonoBehaviour
             // Debug.Log("Dealt: " + round.Count + "Remain: " + tempBank.Count);
         }
 
+    }
+
+    public void AddRoundWinner(int winner, int round)
+    {
+
+        BattleCharacter winningCharacter = GetRound(round)[winner];
+        round4.Add(winningCharacter);
     }
 
 
