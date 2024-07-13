@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb052deb9a805b4c808cb4d294df3e5, type: 3}
   m_Name: Bob
   m_EditorClassIdentifier: 
+  cardPrefab: {fileID: 7346009638355477272, guid: 6457adf0ade5e724cbcfb2690bbf4403, type: 3}
   characterName: Bob
-  characterSprite: {fileID: 21300000, guid: 81a8557f3c20e5d43b8a5c52039fd436, type: 3}
-  nameSprite: {fileID: 21300000, guid: 1e2708e17d46e37439fa92ee9a982d47, type: 3}
+  characterSprite: {fileID: 21300000, guid: d44b79cbe122a7a4ebeda40fcc972238, type: 3}
+  nameSprite: {fileID: 21300000, guid: 74f9cef85ba44bd46a773e1503c8c881, type: 3}

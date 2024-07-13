@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb052deb9a805b4c808cb4d294df3e5, type: 3}
   m_Name: Princess Rainbowbutt
   m_EditorClassIdentifier: 
+  cardPrefab: {fileID: 7346009638355477272, guid: d466484a3b7adc641a9f9edf2708e03a, type: 3}
   characterName: Princess Rainbowbutt
-  characterSprite: {fileID: 21300000, guid: ab43874906b03f74f8a069cf09246663, type: 3}
-  nameSprite: {fileID: 21300000, guid: e68abc1bc1a0ed349a8d1dde90e76449, type: 3}
+  characterSprite: {fileID: 21300000, guid: 218f3d4d354d79f43a8c43e1683f9d86, type: 3}
+  nameSprite: {fileID: 21300000, guid: c0e4d1f4c0797474f87b9e0e30da20d0, type: 3}

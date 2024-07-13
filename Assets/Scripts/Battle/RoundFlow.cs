@@ -7,16 +7,12 @@ public class RoundFlow : MonoBehaviour
 {
     [Header("Battle Screen")]
     [Header("Left Most Character")]
-    [SerializeField] Image characterSprite1;
-    [SerializeField] Image nameSprite1;
+    [SerializeField] GameObject LeftCharacter;
     [Header("Center Character")]
-    [SerializeField] Image characterSprite2;
-    [SerializeField] Image nameSprite2;
+    [SerializeField] GameObject CenterCharacter;
 
     [Header("Right Most Character")]
-    [SerializeField] Image characterSprite3;
-    [SerializeField] Image nameSprite3;
-
+    [SerializeField] GameObject RightCharacter;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,16 +28,19 @@ public class RoundFlow : MonoBehaviour
     //     // InitiateRound(CuteCharactersBank.Instance().GetRound(1), 1);
     // }
 
-    public void InitiateRound(List<BattleCharacter> roundBank, int roundIndex)
+    public void InitiateRound(List<BattleCharacter> roundBank, int roundIndex, GameObject left, GameObject center, GameObject right)
     {
         Debug.Log(roundBank.Count);
-        characterSprite1.sprite = roundBank[0].characterSprite;
-        characterSprite2.sprite = roundBank[1].characterSprite;
-        characterSprite3.sprite = roundBank[2].characterSprite;
-
-        nameSprite1.sprite = roundBank[0].nameSprite;
-        nameSprite2.sprite = roundBank[1].nameSprite;
-        nameSprite3.sprite = roundBank[2].nameSprite;
+        GameObject temp = Instantiate(roundBank[0].cardPrefab, left.transform.position , left.transform.rotation);
+        temp.transform.parent = left.transform;
+        temp.transform.localScale = new Vector3(1, 1,1);
+        temp = Instantiate(roundBank[1].cardPrefab, center.transform.position , center.transform.rotation);
+        temp.transform.parent = center.transform;
+        temp.transform.localScale = new Vector3(1, 1,1);
+        temp = Instantiate(roundBank[2].cardPrefab, right.transform.position , right.transform.rotation);
+        temp.transform.parent = right.transform;
+        temp.transform.localScale = new Vector3(1, 1,1);
+      
 
     }
 }

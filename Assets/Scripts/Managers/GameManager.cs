@@ -6,27 +6,11 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    public enum RoundPhase { INIT, QUESTION, CHOOSE, POINTS, FINAL };
+    public enum RoundPhase { SPLASH, INIT, STORY, PLAYERSELECT, INSTRUCTIONS, QUESTION, CHOOSE, POINTS, NEXTQUESTION, MINIGAME, FINAL };
     public RoundPhase currentRoundPhase = RoundPhase.INIT;
+    private ObjectsHolder items;
     public int currentRound = 0;
-    [Header("Screens")]
-    [SerializeField] GameObject splashScreen;
-    [SerializeField] GameObject playerSelectScreen;
-    [SerializeField] GameObject instructionsScreen;
-    [SerializeField] GameObject questionScreen;
-    [SerializeField] GameObject characterBattleScreen;
-    [SerializeField] GameObject winningCharacterScreen;
-    [SerializeField] GameObject nextQuestionScreen;
 
-    [Header("Questions Screen")]
-    [SerializeField] TextMeshProUGUI roundText;
-    [SerializeField] TextMeshProUGUI questionText;
-    [Header("Battle Screen")]
-    [SerializeField] TextMeshProUGUI battleQuestionText;
-
-    [Header("Winning Character Screen")]
-    [SerializeField] Image winningCharacter;
-    [SerializeField] Image winningCharacterName;
 
 
     List<BattleCharacter> currentRoundCharacters = new List<BattleCharacter>();
@@ -50,8 +34,9 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        items = this.gameObject.GetComponent<ObjectsHolder>();
         roundFlow = gameObject.GetComponent<RoundFlow>();
-        splashScreen.SetActive(true);
+        items.splashScreen.SetActive(true);
         InitiateGame();
 
     }
@@ -89,13 +74,27 @@ public class GameManager : MonoBehaviour
         QuestionsBank.Instance().ChooseQuestionForRounds();
     }
 
+    #region Screen control
+
     private void ScreenControl()
     {
         switch (currentRoundPhase)
         {
-            case RoundPhase.INIT:
+            case RoundPhase.SPLASH:
                 InitiateRound();
-                currentRoundPhase = RoundPhase.QUESTION;
+                currentRoundPhase = RoundPhase.INIT;
+                break;
+            case RoundPhase.INIT:
+                StartGame();
+                break;
+            case RoundPhase.STORY:
+                EndStory();
+                break;
+            case RoundPhase.PLAYERSELECT:
+                PlayerSelected();
+                break;
+            case RoundPhase.INSTRUCTIONS:
+                HideInstructions();
                 break;
             case RoundPhase.QUESTION:
                 QuestionToCharacter();
@@ -104,7 +103,12 @@ public class GameManager : MonoBehaviour
                 //currently in other function//
                 break;
             case RoundPhase.POINTS:
-                ChooseRoundWinner(roundWinner, currentRound);
+                // 
+                break;
+            case RoundPhase.NEXTQUESTION:
+                MoveToNextQuestion();
+                break;
+            case RoundPhase.MINIGAME:
                 break;
             case RoundPhase.FINAL:
                 TempRound4();
@@ -116,6 +120,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Move Between Phases
+
     private void InitiateRound()
     {
         currentRound++;
@@ -123,14 +131,67 @@ public class GameManager : MonoBehaviour
         {
             currentRoundCharacters.Add(character);
         }
-        roundText.text = "ROUND " + currentRound.ToString();
-        questionText.text = QuestionsBank.Instance().GetCurrentRoundQuestion(currentRound);
-        battleQuestionText.text = QuestionsBank.Instance().GetCurrentRoundQuestion(currentRound);
-        roundFlow.InitiateRound(currentRoundCharacters, currentRound);
-        splashScreen.SetActive(false);
-        nextQuestionScreen.SetActive(false);
-        questionScreen.SetActive(true);
+        items.questionRoundText.text = "ROUND " + currentRound.ToString();
+        items.questionText.text = QuestionsBank.Instance().GetCurrentRoundQuestion(currentRound);
+        items.battleQuestionText.text = QuestionsBank.Instance().GetCurrentRoundQuestion(currentRound);
+        roundFlow.InitiateRound(currentRoundCharacters, currentRound, items.leftCharacterPlace, items.centerCharacterPlace, items.rightCharacterPlace);
+        // items.splashScreen.SetActive();
+        // nextQuestionScreen.SetActive(false);
+        items.battleScreen.SetActive(false);
+        items.battleUI.SetActive(false);
+        items.questionUI.SetActive(false);
+        items.storyScreen.SetActive(false);
+        items.playerSelectionScreen.SetActive(false);
+        items.instructionsScreen.SetActive(false);
+        items.roundWinnerScreen.SetActive(false);
+        items.miniGameScreen.SetActive(false);
+        items.winningScreen.SetActive(false);
     }
+
+    private void NextRound()
+    {
+        currentRound++;
+        foreach (BattleCharacter character in CuteCharactersBank.Instance().GetRound(currentRound))
+        {
+            currentRoundCharacters.Add(character);
+        }
+        items.questionRoundText.text = "ROUND " + currentRound.ToString();
+        items.questionText.text = QuestionsBank.Instance().GetCurrentRoundQuestion(currentRound);
+        items.battleQuestionText.text = QuestionsBank.Instance().GetCurrentRoundQuestion(currentRound);
+        roundFlow.InitiateRound(currentRoundCharacters, currentRound, items.leftCharacterPlace, items.centerCharacterPlace, items.rightCharacterPlace);
+    }
+
+    private void StartGame()
+    {
+        items.splashScreen.SetActive(false);
+        items.storyScreen.SetActive(true);
+        currentRoundPhase = RoundPhase.STORY;
+
+    }
+
+    private void EndStory()
+    {
+        items.storyScreen.SetActive(false);
+        items.playerSelectionScreen.SetActive(true);
+        currentRoundPhase = RoundPhase.PLAYERSELECT;
+    }
+
+    private void PlayerSelected()
+    {
+        items.playerSelectionScreen.SetActive(false);
+        items.instructionsScreen.SetActive(true);
+        currentRoundPhase = RoundPhase.INSTRUCTIONS;
+    }
+
+    private void HideInstructions()
+    {
+        currentRoundPhase = RoundPhase.QUESTION;
+        items.instructionsScreen.SetActive(false);
+        items.battleScreen.SetActive(true);
+        items.battleUI.SetActive(false);
+        items.questionUI.SetActive(true);
+    }
+
 
     private void QuestionToCharacter()
     {
@@ -142,29 +203,46 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         currentRoundPhase = RoundPhase.CHOOSE;
-        questionScreen.SetActive(false);
-        characterBattleScreen.SetActive(true);
+        items.questionUI.SetActive(false);
+        items.battleUI.SetActive(true);
+        items.timer.StartTimer();
 
     }
+
+    private void MoveToNextQuestion()
+    {
+        NextRound();
+        items.roundWinnerScreen.SetActive(false);
+        items.battleScreen.SetActive(true);
+        items.battleUI.SetActive(false);
+        items.questionUI.SetActive(true);
+        currentRoundPhase = RoundPhase.QUESTION;
+    }
+
+    #endregion
 
     private void ClickCharacter(int characterClicked)
     {
         roundWinner = characterClicked;
-        winningCharacter.sprite = currentRoundCharacters[characterClicked].characterSprite;
-        winningCharacterName.sprite = currentRoundCharacters[characterClicked].nameSprite;
+        items.firstPlace.sprite = currentRoundCharacters[characterClicked].characterSprite;
+        #region FIX
         //add if for all players choose or timer
-        winningCharacterScreen.SetActive(true);
+        ////////////////////////// FOR NOW ONLY TIMERRRRR//////////////////////
+        // items.roundWinnerScreen.SetActive(true);
+        #endregion
         currentRoundPhase = RoundPhase.POINTS;
     }
 
-    private void ChooseRoundWinner(int winner, int currentRound)
+    public void ChooseRoundWinner()
     {
-        CuteCharactersBank.Instance().AddRoundWinner(winner, currentRound);
+        items.battleScreen.SetActive(false);
+        items.roundWinnerScreen.SetActive(true);
+        CuteCharactersBank.Instance().AddRoundWinner(roundWinner, currentRound);
 
         currentRoundCharacters.Clear();
-        winningCharacterScreen.SetActive(false);
-        currentRoundPhase = RoundPhase.INIT;
-        nextQuestionScreen.SetActive(true);
+        // items.roundWinnerScreen.SetActive(false);
+        currentRoundPhase = RoundPhase.NEXTQUESTION;
+        // nextQuestionScreen.SetActive(true);
         if (currentRound == 3)
         {
             currentRoundPhase = RoundPhase.FINAL;
@@ -174,13 +252,13 @@ public class GameManager : MonoBehaviour
 
     private void TempRound4()
     {
-        battleQuestionText.text = "ROUND 4 PARTICIPANTS";
+        items.battleQuestionText.text = "ROUND 4 PARTICIPANTS";
         foreach (BattleCharacter character in CuteCharactersBank.Instance().GetRound(4))
         {
             currentRoundCharacters.Add(character);
         }
-        roundFlow.InitiateRound(currentRoundCharacters, 4);
-        nextQuestionScreen.SetActive(false);
+        roundFlow.InitiateRound(currentRoundCharacters, 4, items.leftCharacterPlace, items.centerCharacterPlace, items.rightCharacterPlace);
+        // nextQuestionScreen.SetActive(false);
     }
 
 

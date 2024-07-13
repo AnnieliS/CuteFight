@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb052deb9a805b4c808cb4d294df3e5, type: 3}
   m_Name: Brewski Brent
   m_EditorClassIdentifier: 
+  cardPrefab: {fileID: 7346009638355477272, guid: 6898a9b50b1cc884f956cb2d977c0278, type: 3}
   characterName: Brewski Brent
-  characterSprite: {fileID: 21300000, guid: e10ec1dab6d61f04ba31da6f7dcd322c, type: 3}
-  nameSprite: {fileID: 21300000, guid: 9df2792462964a04faa48fe7f32a0cf0, type: 3}
+  characterSprite: {fileID: 21300000, guid: 954f117e8a9875747b1d3fbf1840c572, type: 3}
+  nameSprite: {fileID: 21300000, guid: 70d6cf9e0e94a8b4db40e676ad63229c, type: 3}

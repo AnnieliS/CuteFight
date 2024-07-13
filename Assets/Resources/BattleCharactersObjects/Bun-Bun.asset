@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb052deb9a805b4c808cb4d294df3e5, type: 3}
   m_Name: Bun-Bun
   m_EditorClassIdentifier: 
+  cardPrefab: {fileID: 7346009638355477272, guid: 3d42fef45172c1045ab04121173da407, type: 3}
   characterName: Bun-Bun
-  characterSprite: {fileID: 21300000, guid: f85fa22a1c540fe44bd74eed00a4063d, type: 3}
-  nameSprite: {fileID: 21300000, guid: d809487e34f6ee84d98111c73e5dfd51, type: 3}
+  characterSprite: {fileID: 21300000, guid: 4b688d8360b3ac3469c9bb0871b274e9, type: 3}
+  nameSprite: {fileID: 21300000, guid: 2454b75448696b64788b341436998f1a, type: 3}

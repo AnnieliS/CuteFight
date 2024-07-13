@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb052deb9a805b4c808cb4d294df3e5, type: 3}
   m_Name: Flambo
   m_EditorClassIdentifier: 
+  cardPrefab: {fileID: 7346009638355477272, guid: 89602d83f9008ba44a9d4d057a023a65, type: 3}
   characterName: Flambo
-  characterSprite: {fileID: 21300000, guid: 555c25ad20825bd43aba1b72ee41b626, type: 3}
-  nameSprite: {fileID: 21300000, guid: 8524254993e8df94ca159f239f65d304, type: 3}
+  characterSprite: {fileID: 21300000, guid: 6671df43668554b498d7a90e8025e426, type: 3}
+  nameSprite: {fileID: 21300000, guid: d2b3db9058d28ee4bafeed02c388aa7f, type: 3}
